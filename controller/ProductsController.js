@@ -3,7 +3,7 @@ import Product from "../models/Products.js";
 import User from "../models/User.js";
 import ApiFeatures from "../utils/apiFeatures.js";
 import getDataUri from "../utils/dataUri.js";
-import ErrorHandler from "../utils/errorHandler.js";
+import ErrorHandler from "../utils/ErrorHandler.js";
 import cloudinary from "cloudinary";
 
 export const getAllProducts = catchAsyncError(async (req, res, next) => {

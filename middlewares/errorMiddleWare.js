@@ -1,4 +1,4 @@
-import ErrorHandler from "../utils/errorHandler.js";
+import ErrorHandler from "../utils/ErrorHandler.js";
 
 export const errorMiddleware = (err, req, res, next) => {
   let error = { ...err }; // Create a copy of the error object
