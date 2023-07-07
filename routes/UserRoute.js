@@ -12,7 +12,7 @@ import {
   updateProfilePicture,
   updateUserRole,
 } from "../controller/UserController.js";
-import { isAuthenticated } from "../middlewares/auth.js";
+import { isAuthenticated } from "../middlewares/Auth.js";
 
 import singleUpload from "../middlewares/Multer.js";
 

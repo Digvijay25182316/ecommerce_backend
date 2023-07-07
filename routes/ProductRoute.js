@@ -10,7 +10,7 @@ import {
   updateProductDetails,
   updateProductPoster,
 } from "../controller/ProductsController.js";
-import { authorizeAdmin, isAuthenticated } from "../middlewares/auth.js";
+import { authorizeAdmin, isAuthenticated } from "../middlewares/Auth.js";
 import singleUpload from "../middlewares/Multer.js";
 
 const router = express.Router();
