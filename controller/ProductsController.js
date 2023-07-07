@@ -9,6 +9,8 @@ import cloudinary from "cloudinary";
 export const getAllProducts = catchAsyncError(async (req, res, next) => {
   const resultPerPage = 3;
   const productCount = await Product.countDocuments();
+  if (productCount === 0)
+    return next(new ErrorHandler("Products are yet to upload"));
   const apifeature = new ApiFeatures(Product.find(), req.query)
     .search()
     .filter()
