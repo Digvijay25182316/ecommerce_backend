@@ -17,6 +17,10 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: [process.env.FRONTEND_URL, "http://localhost:3000"],
+    "Access-Control-Allow-Origin": [
+      process.env.FRONTEND_URL,
+      "http://localhost:3000",
+    ],
     credentials: true,
   })
 );
