@@ -18,12 +18,12 @@ import singleUpload from "../middlewares/Multer.js";
 
 const router = express.Router();
 
+//completed
 router.route("/register").post(singleUpload, register);
-router.route("/users").get(getAllUsers);
-
+//completed
 router.route("/login").post(login);
 
-// Logout
+// Logout         //completed
 router.route("/logout").get(logout);
 
 // Get my profile
@@ -38,7 +38,7 @@ router.route("/updateprofile").put(isAuthenticated, updateProfile);
 //update profile Picture
 router
   .route("/updateprofilepicture")
-  .put(isAuthenticated, updateProfilePicture);
+  .put(singleUpload, isAuthenticated, updateProfilePicture);
 
 //forgetPassword
 router.route("/forgetpassword").post(forgetPassword);
@@ -46,6 +46,8 @@ router.route("/forgetpassword").post(forgetPassword);
 router.route("/resetpassword/:token").put(resetPassword);
 
 // admin routes
+//incomplete
+router.route("/users").get(getAllUsers);
 router.route("/updaterole").put(updateUserRole);
 
 export default router;

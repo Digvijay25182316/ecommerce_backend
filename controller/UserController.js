@@ -99,7 +99,8 @@ export const updateProfile = catchAsyncError(async (req, res, next) => {
 export const updateProfilePicture = catchAsyncError(async (req, res, next) => {
   const user = await User.findById(req.user._id);
   const file = req.file;
-  console.log(file);
+  if (!file)
+    return next(new ErrorHandler("you have not selected any file", 400));
   const fileUri = getDataUri(file);
   const mycloud = await cloudinary.v2.uploader.upload(fileUri.content);
   await cloudinary.v2.uploader.destroy(user.avatar.public_id);
@@ -118,6 +119,7 @@ export const updateProfilePicture = catchAsyncError(async (req, res, next) => {
 });
 export const forgetPassword = catchAsyncError(async (req, res, next) => {
   const { email } = req.body;
+  if (!email) return next(new ErrorHandler("please enter all the fields"));
 
   const user = await User.findOne({ email });
 
@@ -127,7 +129,7 @@ export const forgetPassword = catchAsyncError(async (req, res, next) => {
 
   await user.save();
 
-  const url = `${process.env.FRONTEND_URL}/resetpassword/${resetToken}`;
+  const url = `${process.env.FRONTEND_URL}resetpassword/${resetToken}`;
 
   const message = `Click on the link reset your password ${url} if you have not requestedd then simply ignore`;
 
@@ -174,13 +176,26 @@ export const updateUserRole = catchAsyncError(async (req, res, next) => {
   res.status(200).json({
     success: true,
     user,
+    message: "User role updated successfully",
   });
 });
 
 export const getAllUsers = catchAsyncError(async (req, res, next) => {
   const users = await User.find();
-  res.json({
+  if (users.length === 0) return next(new ErrorHandler("No user to show", 409));
+  res.status(200).json({
     success: true,
     users,
+  });
+});
+
+export const deleteUser = catchAsyncError(async (req, res, next) => {
+  const { id } = req.body;
+  const user = await User.findById(id);
+  if (!user) return next(new ErrorHandler("User not found"));
+  await user.deleteOne();
+  res.status(200).json({
+    success: true,
+    message: "user deleted successfully",
   });
 });
