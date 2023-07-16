@@ -48,19 +48,7 @@ const userSchema = new mongoose.Schema({
       },
     },
   ],
-  ordersHistory: [
-    {
-      orderId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Order",
-      },
-      createdAt: {
-        type: Date,
-        default: Date.now(),
-      },
-    },
-  ],
-  currentOrders: [
+  orders: [
     {
       orderId: {
         type: mongoose.Schema.Types.ObjectId,

@@ -93,6 +93,7 @@ export const updateProfile = catchAsyncError(async (req, res, next) => {
   res.status(200).json({
     success: true,
     message: "Profile changed successfully",
+    user,
   });
 });
 
@@ -115,6 +116,7 @@ export const updateProfilePicture = catchAsyncError(async (req, res, next) => {
   res.status(200).json({
     success: true,
     message: "profile picture updated",
+    user,
   });
 });
 export const forgetPassword = catchAsyncError(async (req, res, next) => {

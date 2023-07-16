@@ -34,8 +34,6 @@ export const createProduct = catchAsyncError(async (req, res, next) => {
     brand,
     material,
     features,
-    ratings,
-    reviews,
   } = req.body;
   const file = req.file;
   if (!file) return next(new ErrorHandler("enter all fields"));
@@ -50,8 +48,6 @@ export const createProduct = catchAsyncError(async (req, res, next) => {
     brand,
     material,
     features,
-    ratings,
-    reviews,
     poster: {
       public_id: mycloud.public_id,
       url: mycloud.secure_url,
@@ -59,6 +55,7 @@ export const createProduct = catchAsyncError(async (req, res, next) => {
   });
   res.status(200).json({
     success: true,
+    message: "product created successfully",
     product,
   });
 });
@@ -73,6 +70,7 @@ export const updateProductPoster = catchAsyncError(async (req, res, next) => {
 
   // Images Start Here
   const file = req.file;
+  if (!file) return next(new ErrorHandler("Please fill all fields"));
   const fileUri = getDataUri(file);
   const mycloud = await cloudinary.v2.uploader.upload(fileUri.content);
   await cloudinary.v2.uploader.destroy(product.poster.public_id);
@@ -86,6 +84,7 @@ export const updateProductPoster = catchAsyncError(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
+    message: "poster updated successfully",
     product,
   });
 });
@@ -97,6 +96,7 @@ export const updateProductDetails = catchAsyncError(async (req, res, next) => {
   product = await Product.findByIdAndUpdate(id, req.body);
   res.status(200).json({
     success: true,
+    message: "product details updated successfully",
     product,
   });
 });
@@ -171,6 +171,7 @@ export const createProductReview = catchAsyncError(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
+    message: "Thanks!! for the reviews",
   });
 });
 
@@ -232,5 +233,6 @@ export const deleteReview = catchAsyncError(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
+    message: "review deleted",
   });
 });

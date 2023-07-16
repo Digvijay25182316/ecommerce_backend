@@ -12,7 +12,7 @@ import {
   updateProfilePicture,
   updateUserRole,
 } from "../controller/UserController.js";
-import { isAuthenticated } from "../middlewares/Auth.js";
+import { authorizeAdmin, isAuthenticated } from "../middlewares/Auth.js";
 
 import singleUpload from "../middlewares/Multer.js";
 
@@ -47,7 +47,7 @@ router.route("/resetpassword/:token").put(resetPassword);
 
 // admin routes
 //incomplete
-router.route("/users").get(getAllUsers);
+router.route("/users").get(isAuthenticated, authorizeAdmin, getAllUsers);
 router.route("/updaterole").put(updateUserRole);
 
 export default router;
