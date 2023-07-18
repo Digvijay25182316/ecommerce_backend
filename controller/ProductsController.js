@@ -7,7 +7,7 @@ import ErrorHandler from "../utils/ErrorHandler.js";
 import cloudinary from "cloudinary";
 
 export const getAllProducts = catchAsyncError(async (req, res, next) => {
-  const resultPerPage = 3;
+  const resultPerPage = 30;
   const productCount = await Product.countDocuments();
   if (productCount === 0)
     return next(new ErrorHandler("Products are yet to upload"));
