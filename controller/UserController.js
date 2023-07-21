@@ -27,9 +27,9 @@ export const register = catchAsyncError(async (req, res, next) => {
   });
   sendToken(res, user, "registered successfully");
 });
+
 export const login = catchAsyncError(async (req, res, next) => {
   const { email, password } = req.body;
-  //   const file = req.file
   if (!email || !password)
     return next(new ErrorHandler("Please enter all fileds", 400));
   const user = await User.findOne({ email }).select("+password");
@@ -192,7 +192,7 @@ export const getAllUsers = catchAsyncError(async (req, res, next) => {
 });
 
 export const deleteUser = catchAsyncError(async (req, res, next) => {
-  const { id } = req.body;
+  const { id } = req.params;
   const user = await User.findById(id);
   if (!user) return next(new ErrorHandler("User not found"));
   await user.deleteOne();

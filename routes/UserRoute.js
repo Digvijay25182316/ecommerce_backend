@@ -1,6 +1,7 @@
 import express from "express";
 import {
   changePassword,
+  deleteUser,
   forgetPassword,
   getAllUsers,
   getMyProfile,
@@ -18,12 +19,11 @@ import singleUpload from "../middlewares/Multer.js";
 
 const router = express.Router();
 
-//completed
+//register
 router.route("/register").post(singleUpload, register);
-//completed
+//login
 router.route("/login").post(login);
-
-// Logout         //completed
+// Logout
 router.route("/logout").get(logout);
 
 // Get my profile
@@ -42,12 +42,19 @@ router
 
 //forgetPassword
 router.route("/forgetpassword").post(forgetPassword);
+
 //resetPassword
 router.route("/resetpassword/:token").put(resetPassword);
 
 // admin routes
-//incomplete
 router.route("/users").get(isAuthenticated, authorizeAdmin, getAllUsers);
-router.route("/updaterole").put(updateUserRole);
+
+router
+  .route("/updaterole")
+  .put(isAuthenticated, authorizeAdmin, updateUserRole);
+
+router
+  .route("/deleteuser/:id")
+  .delete(isAuthenticated, authorizeAdmin, deleteUser);
 
 export default router;
