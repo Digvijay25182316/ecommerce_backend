@@ -68,6 +68,8 @@ const userSchema = new mongoose.Schema({
   resetPasswordExpire: String,
 });
 
+userSchema.index({ email: 1 }, { unique: true });
+
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
   this.password = await bcrypt.hash(this.password, 10);
