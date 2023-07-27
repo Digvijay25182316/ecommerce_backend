@@ -11,6 +11,11 @@ cloudinary.v2.config({
   api_secret: process.env.CLOUDINARY_CLIENT_SECRET,
 });
 
+// Set the cookie with SameSite=None and Secure
+app.get("/", (req, res) => {
+  res.cookie("token", token, { sameSite: "none", secure: true });
+});
+
 connectDB();
 
 const PORT = process.env.PORT || 5000;
