@@ -7,6 +7,7 @@ import ErrorHandler from "../utils/ErrorHandler.js";
 export const placeOrder = catchAsyncError(async (req, res, next) => {
   // Extract necessary information from the request body
   const { userId, products, totalAmount, shippingAddress } = req.body;
+  console.log(req.body);
 
   if (!userId || !products || !totalAmount || !shippingAddress)
     return next(
@@ -41,17 +42,16 @@ export const placeOrder = catchAsyncError(async (req, res, next) => {
 });
 
 export const deleteOrder = catchAsyncError(async (req, res, next) => {
-  const orderId = req.params.orderId;
-
-  const order = await Order.findById(orderId);
+  const { id } = req.params;
+  const order = await Order.findById(id);
 
   if (!order) return next(new ErrorHandler("Order Does not exist", 404));
 
   if (order.isDelivered)
     return next(new ErrorHandler("cannot cancel a delivered order"));
-  await Order.findByIdAndRemove(orderId);
+  await Order.findByIdAndRemove(id);
 
-  await User.findByIdAndUpdate(order.userId, { $pull: { orders: orderId } });
+  await User.findByIdAndUpdate(order.userId, { $pull: { orders: id } });
 
   for (const product of order.products) {
     await Product.findByIdAndUpdate(product.productId, {
@@ -65,13 +65,12 @@ export const deleteOrder = catchAsyncError(async (req, res, next) => {
   });
 });
 
-
 export const UpdateOrder = catchAsyncError(async (req, res, next) => {
-  const orderId = req.params.orderId;
+  const { id } = req.params;
   const { products, totalAmount, shippingAddress } = req.body;
 
   // Find the order by ID
-  const order = await Order.findById(orderId);
+  const order = await Order.findById(id);
 
   if (!order) return next(new ErrorHandler("Order does not exist"));
 
@@ -99,5 +98,17 @@ export const getAllOrders = catchAsyncError(async (req, res, next) => {
   res.status(200).json({
     success: true,
     orders,
+  });
+});
+
+export const getOneOrder = catchAsyncError(async (req, res, next) => {
+  const { id } = req.params;
+  const order = await Order.findById(id);
+  if (!order) {
+    return next(new ErrorHandler("Order does not exist", 401));
+  }
+  res.status(201).json({
+    success: true,
+    order,
   });
 });

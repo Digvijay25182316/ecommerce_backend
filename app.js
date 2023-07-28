@@ -6,6 +6,8 @@ import payment from "./routes/PaymentRoute.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import bodyParser from "body-parser";
+import cart from "./routes/CartItemRoute.js";
+import order from "./routes/OrderRoute.js";
 
 const app = express();
 
@@ -16,7 +18,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin: [process.env.FRONTEND_URL, "http://localhost:3000"],
     credentials: true,
   })
 );
@@ -25,6 +27,8 @@ app.use(
 app.use("/api/v1", user);
 app.use("/api/v1", product);
 app.use("/api/v1", payment);
+app.use("/api/v1", cart);
+app.use("/api/v1", order);
 
 // middlewares
 app.use(errorMiddleWare);
