@@ -1,5 +1,3 @@
-// Boilerhtml.js
-
 const fs = require("fs").promises;
 const path = require("path");
 
@@ -11,8 +9,9 @@ const BoilerHTML = (content, fileName, header) => {
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>${fileName}</title>
+      <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
     </head>
-    <body style="margin:0;padding:0">
+    <body>
       ${header && header}
       ${content}
     </body>
