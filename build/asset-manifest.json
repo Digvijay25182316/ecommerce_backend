@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/static/css/main.b8942236.css",
+    "main.js": "/static/js/main.68486a6d.js",
+    "static/media/IskonLogo.webp": "/static/media/IskonLogo.ed66f47cd118fab21758.webp",
+    "index.html": "/index.html",
+    "main.b8942236.css.map": "/static/css/main.b8942236.css.map",
+    "main.68486a6d.js.map": "/static/js/main.68486a6d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b8942236.css",
+    "static/js/main.68486a6d.js"
+  ]
+}

@@ -1,23 +1,16 @@
 const express = require("express");
-const path = require("path");
-const getLanding = require("./Views/Components/Landing");
-
 const app = express();
+const path = require("path");
 
-//middlewares
-
+// Middlewares
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-//get routes
-app.get("/", async (req, res) => {
-  try {
-    const responseFile = await getLanding();
-    if (responseFile) return res.sendFile(responseFile);
-  } catch (error) {
-    console.log(error);
-  }
+
+// Serve static files from the 'build' directory
+app.use(express.static(path.resolve(__dirname, "build")));
+
+// Serve the 'index.html' for all routes
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "build", "index.html"));
 });
-//static page middleware
-app.use(express.static(path.resolve(__dirname, "Views", "public")));
 
 module.exports = app;
